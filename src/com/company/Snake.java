@@ -68,7 +68,6 @@ public class Snake {
                 current.getCoordinates().toDown();
                 current = current.getNext();
             }
-            current = turn;
             while (current.getNext() != null) {
                 current.getCoordinates().toRight();
                 current = current.getNext();
@@ -83,7 +82,6 @@ public class Snake {
                 current.getCoordinates().toUp();
                 current = current.getNext();
             }
-            current = turn;
             while (current.getNext() != null) {
                 current.getCoordinates().toRight();
                 current = current.getNext();
@@ -111,7 +109,6 @@ public class Snake {
                 current.getCoordinates().toDown();
                 current = current.getNext();
             }
-            current = turn;
             while (current.getNext() != null) {
                 current.getCoordinates().toLeft();
                 current = current.getNext();
@@ -123,7 +120,6 @@ public class Snake {
                 current.getCoordinates().toUp();
                 current = current.getNext();
             }
-            current = turn;
             while (current.getNext() != null) {
                 current.getCoordinates().toLeft();
                 current = current.getNext();
@@ -154,7 +150,6 @@ public class Snake {
                 current.getCoordinates().toRight();
                 current = current.getNext();
             }
-            current = turn;
             while (current.getNext() != null) {
                 current.getCoordinates().toDown();
                 current = current.getNext();
@@ -166,7 +161,6 @@ public class Snake {
                 current.getCoordinates().toLeft();
                 current = current.getNext();
             }
-            current = turn;
             while (current.getNext() != null) {
                 current.getCoordinates().toDown();
                 current = current.getNext();
@@ -195,7 +189,6 @@ public class Snake {
                 current.getCoordinates().toRight();
                 current = current.getNext();
             }
-            current = turn;
             while (current.getNext() != null) {
                 current.getCoordinates().toUp();
                 current = current.getNext();
@@ -207,7 +200,6 @@ public class Snake {
                 current.getCoordinates().toLeft();
                 current = current.getNext();
             }
-            current = turn;
             while (current.getNext() != null) {
                 current.getCoordinates().toUp();
                 current = current.getNext();
