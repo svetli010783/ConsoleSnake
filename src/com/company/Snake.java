@@ -5,7 +5,6 @@ public class Snake {
     private Fruit head;
     private Fruit tail;
     private int size = 0;
-    private Fruit turn;
 
     public Snake(int width, int height) {
         head = new Fruit(
@@ -40,13 +39,13 @@ public class Snake {
 
     public boolean hasCoordinate(Coordinate coordinate) {
         boolean result = false;
-        Fruit current = tail;
-        while (current.getNext() != null) {
+        Fruit current = head;
+        while (current.getPrevious() != null) {
             if (current.getCoordinates().equals(coordinate)) {
                 result = true;
                 break;
             }
-            current = current.getNext();
+            current = current.getPrevious();
         }
         return result;
     }
@@ -55,39 +54,16 @@ public class Snake {
         if (direction == 'a') {
             System.out.println("Move Right is not available");
             direction = 'a';
-        } else if (direction == 'd') {
-            Fruit current = tail;
-            while (current.getNext() != null) {
-                current.getCoordinates().toRight();
-                current = current.getNext();
-            }
-        } else if (direction == 's') {
-            turn = head;
-            Fruit current = tail;
-            while (current.getNext() != turn) {
-                current.getCoordinates().toDown();
-                current = current.getNext();
-            }
-            while (current.getNext() != null) {
-                current.getCoordinates().toRight();
-                current = current.getNext();
-            }
-            if (turn == tail) {
-                turn = null;
-            }
-        } else if (direction == 'w') {
-            turn = head;
-            Fruit current = tail;
-            while (current.getNext() != turn) {
-                current.getCoordinates().toUp();
-                current = current.getNext();
-            }
-            while (current.getNext() != null) {
-                current.getCoordinates().toRight();
-                current = current.getNext();
-            }
-            if (turn == tail) {
-                turn = null;
+        }  else if (direction == 'w'||direction == 's'||direction == 'd') {
+            Fruit current = head;
+            Fruit a = current;
+            Fruit b;
+            current.getCoordinates().toRight();
+            while (current.getPrevious() != null) {
+                b = current.getPrevious();
+                a = current.getPrevious();
+                current.getPrevious().setCoordinates(a.getCoordinates());
+                current = b;
             }
         }
     }
@@ -96,40 +72,18 @@ public class Snake {
         if (direction == 'd') {
             System.out.println("Move Left is not available");
             direction = 'd';
-        } else if (direction == 'a') {
-            Fruit current = tail;
-            while (current.getNext() != null) {
-                current.getCoordinates().toLeft();
-                current = current.getNext();
+        }  else if (direction == 'w'||direction == 'a'||direction == 's') {
+            Fruit current = head;
+            Fruit a = current;
+            Fruit b;
+            current.getCoordinates().toLeft();
+            while (current.getPrevious() != null) {
+                b = current.getPrevious();
+                a = current.getPrevious();
+                current.getPrevious().setCoordinates(a.getCoordinates());
+                current = b;
             }
-        } else if (direction == 's') {
-            turn = head;
-            Fruit current = tail;
-            while (current.getNext() != turn) {
-                current.getCoordinates().toDown();
-                current = current.getNext();
-            }
-            while (current.getNext() != null) {
-                current.getCoordinates().toLeft();
-                current = current.getNext();
-            }
-        } else if (direction == 'w') {
-            turn = head;
-            Fruit current = tail;
-            while (current.getNext() != turn) {
-                current.getCoordinates().toUp();
-                current = current.getNext();
-            }
-            while (current.getNext() != null) {
-                current.getCoordinates().toLeft();
-                current = current.getNext();
-            }
-
         }
-        if (turn == tail) {
-            turn = null;
-        }
-
 
     }
 
@@ -137,77 +91,38 @@ public class Snake {
         if (direction == 'w') {
             System.out.println("Move Down is not available");
             direction = 'w';
-        } else if (direction == 's') {
-            Fruit current = tail;
-            while (current.getNext() != null) {
-                current.getCoordinates().toDown();
-                current = current.getNext();
-            }
-        } else if (direction == 'd') {
-            turn = head;
-            Fruit current = tail;
-            while (current.getNext() != turn) {
-                current.getCoordinates().toRight();
-                current = current.getNext();
-            }
-            while (current.getNext() != null) {
-                current.getCoordinates().toDown();
-                current = current.getNext();
-            }
-        } else if (direction == 'a') {
-            turn = head;
-            Fruit current = tail;
-            while (current.getNext() != turn) {
-                current.getCoordinates().toLeft();
-                current = current.getNext();
-            }
-            while (current.getNext() != null) {
-                current.getCoordinates().toDown();
-                current = current.getNext();
+        }  else if (direction == 's'||direction == 'a'||direction == 'd') {
+            Fruit current = head;
+            Fruit a = current;
+            Fruit b;
+            current.getCoordinates().toDown();
+            while (current.getPrevious() != null) {
+                b = current.getPrevious();
+                a = current.getPrevious();
+                current.getPrevious().setCoordinates(a.getCoordinates());
+                current = b;
             }
         }
-        if (turn == tail) {
-            turn = null;
-        }
-
     }
 
     public void moveUp(char direction) {
         if (direction == 's') {
             System.out.println("Move Up is not available");
             direction = 's';
-        } else if (direction == 'w') {
-            Fruit current = tail;
-            while (current.getNext() != null) {
-                current.getCoordinates().toUp();
-                current = current.getNext();
-            }
-        } else if (direction == 'd') {
-            turn = head;
-            Fruit current = tail;
-            while (current.getNext() != turn) {
-                current.getCoordinates().toRight();
-                current = current.getNext();
-            }
-            while (current.getNext() != null) {
-                current.getCoordinates().toUp();
-                current = current.getNext();
-            }
-        } else if (direction == 'a') {
-            turn = head;
-            Fruit current = tail;
-            while (current.getNext() != turn) {
-                current.getCoordinates().toLeft();
-                current = current.getNext();
-            }
-            while (current.getNext() != null) {
-                current.getCoordinates().toUp();
-                current = current.getNext();
+        } else if (direction == 'w'||direction == 'a'||direction == 'd') {
+            Fruit current = head;
+            Fruit a = current;
+            Fruit b;
+            current.getCoordinates().toUp();
+            while (current.getPrevious() != null) {
+                b = current.getPrevious();
+                a = current.getPrevious();
+                current.getPrevious().setCoordinates(a.getCoordinates());
+                current = b;
             }
         }
-        if (turn == tail) {
-            turn = null;
-        }
+
+
     }
 
 }
