@@ -61,7 +61,6 @@ public class Snake {
             current.getCoordinates().toRight();
             while (current.getPrevious() != null) {
                 b = current.getPrevious();
-                a = current.getPrevious();
                 current.getPrevious().setCoordinates(a.getCoordinates());
                 current = b;
             }
@@ -116,7 +115,6 @@ public class Snake {
             current.getCoordinates().toUp();
             while (current.getPrevious() != null) {
                 b = current.getPrevious();
-                a = current.getPrevious();
                 current.getPrevious().setCoordinates(a.getCoordinates());
                 current = b;
             }
