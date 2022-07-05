@@ -16,8 +16,9 @@ public class Fruit {
         return coordinates;
     }
 
-    public void setCoordinates(Coordinate coordinates) {
-        this.coordinates = coordinates;
+    public void setCoordinates(int x,int y) {
+        this.coordinates.setX(x);
+        this.coordinates.setY(y);
     }
 
     public Fruit getPrevious() {

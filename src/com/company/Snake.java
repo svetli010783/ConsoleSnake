@@ -54,15 +54,22 @@ public class Snake {
         if (direction == 'a') {
             System.out.println("Move Right is not available");
             direction = 'a';
-        }  else if (direction == 'w'||direction == 's'||direction == 'd') {
+        }  else if (direction == 'w'||direction == 's' || direction == 'd') {
             Fruit current = head;
-            Fruit a = current;
-            Fruit b;
+           int tempX1 = current.getCoordinates().getX();
+           int tempY1 = current.getCoordinates().getY();
+           int tempX2;
+           int tempY2;
             current.getCoordinates().toRight();
             while (current.getPrevious() != null) {
-                b = current.getPrevious();
-                current.getPrevious().setCoordinates(a.getCoordinates());
-                current = b;
+                tempX2 = current.getPrevious().getCoordinates().getX();
+                tempY2 = current.getPrevious().getCoordinates().getY();
+                current.getPrevious().setCoordinates(tempX1,tempY1);
+                current = current.getPrevious();
+                tempX1 = tempX2;
+                tempY1 = tempY2;
+
+
             }
         }
     }
@@ -73,14 +80,20 @@ public class Snake {
             direction = 'd';
         }  else if (direction == 'w'||direction == 'a'||direction == 's') {
             Fruit current = head;
-            Fruit a = current;
-            Fruit b;
+            int tempX1 = current.getCoordinates().getX();
+            int tempY1 = current.getCoordinates().getY();
+            int tempX2;
+            int tempY2;
             current.getCoordinates().toLeft();
             while (current.getPrevious() != null) {
-                b = current.getPrevious();
-                a = current.getPrevious();
-                current.getPrevious().setCoordinates(a.getCoordinates());
-                current = b;
+                tempX2 = current.getPrevious().getCoordinates().getX();
+                tempY2 = current.getPrevious().getCoordinates().getY();
+                current.getPrevious().setCoordinates(tempX1,tempY1);
+                current = current.getPrevious();
+                tempX1 = tempX2;
+                tempY1 = tempY2;
+
+
             }
         }
 
@@ -90,16 +103,22 @@ public class Snake {
         if (direction == 'w') {
             System.out.println("Move Down is not available");
             direction = 'w';
-        }  else if (direction == 's'||direction == 'a'||direction == 'd') {
+        } else if (direction == 's'||direction == 'a'||direction == 'd') {
             Fruit current = head;
-            Fruit a = current;
-            Fruit b;
+            int tempX1 = current.getCoordinates().getX();
+            int tempY1 = current.getCoordinates().getY();
+            int tempX2;
+            int tempY2;
             current.getCoordinates().toDown();
             while (current.getPrevious() != null) {
-                b = current.getPrevious();
-                a = current.getPrevious();
-                current.getPrevious().setCoordinates(a.getCoordinates());
-                current = b;
+                tempX2 = current.getPrevious().getCoordinates().getX();
+                tempY2 = current.getPrevious().getCoordinates().getY();
+                current.getPrevious().setCoordinates(tempX1,tempY1);
+                current = current.getPrevious();
+                tempX1 = tempX2;
+                tempY1 = tempY2;
+
+
             }
         }
     }
@@ -110,13 +129,20 @@ public class Snake {
             direction = 's';
         } else if (direction == 'w'||direction == 'a'||direction == 'd') {
             Fruit current = head;
-            Fruit a = current;
-            Fruit b;
+            int tempX1 = current.getCoordinates().getX();
+            int tempY1 = current.getCoordinates().getY();
+            int tempX2;
+            int tempY2;
             current.getCoordinates().toUp();
             while (current.getPrevious() != null) {
-                b = current.getPrevious();
-                current.getPrevious().setCoordinates(a.getCoordinates());
-                current = b;
+                tempX2 = current.getPrevious().getCoordinates().getX();
+                tempY2 = current.getPrevious().getCoordinates().getY();
+                current.getPrevious().setCoordinates(tempX1,tempY1);
+                current = current.getPrevious();
+                tempX1 = tempX2;
+                tempY1 = tempY2;
+
+
             }
         }
 

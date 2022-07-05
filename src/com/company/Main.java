@@ -1,8 +1,6 @@
 package com.company;
 
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +34,6 @@ public class Main {
 
 
     private static void renderFrame() {
-        directionSwitching(direction);
         System.out.println("Frame Rendering");
         for (int y = 0; y <= height; y++) {
             for (int x = 0; x <= width; x++) {
@@ -50,7 +47,7 @@ public class Main {
             }
             System.out.println();
         }
-
+        directionSwitching(direction);
     }
 
     private static void directionSwitching(char direction) {
