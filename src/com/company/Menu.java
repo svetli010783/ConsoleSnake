@@ -13,8 +13,7 @@ public class Menu {
                 """);
         int choice = input.nextInt();
         if (choice == 1) {
-            Game game = new Game();
-            game.place();
+
         }
         else if (choice == 2) {
             System.out.println("""

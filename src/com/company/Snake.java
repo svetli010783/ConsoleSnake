@@ -2,7 +2,7 @@ package com.company;
 
 public class Snake {
 
-    private Fruit head;
+    private static Fruit head;
     private Fruit tail;
     private int size = 0;
 
@@ -31,15 +31,19 @@ public class Snake {
         return size;
     }
 
-    public void eat(Fruit fruit) {
+    public boolean eat(Fruit fruit,boolean hasFruit) {
+        hasFruit = false;
         head.setNext(fruit);
         fruit.setPrevious(head);
         head = fruit;
+       return hasFruit;
+
     }
 
     public boolean hasCoordinate(Coordinate coordinate) {
         boolean result = false;
         Fruit current = head;
+
         while (current.getPrevious() != null) {
             if (current.getCoordinates().equals(coordinate)) {
                 result = true;
@@ -50,104 +54,114 @@ public class Snake {
         return result;
     }
 
-    public void moveRight(char direction) {
-        if (direction == 'a') {
-            System.out.println("Move Right is not available");
-            direction = 'a';
-        }  else if (direction == 'w'||direction == 's' || direction == 'd') {
-            Fruit current = head;
-           int tempX1 = current.getCoordinates().getX();
-           int tempY1 = current.getCoordinates().getY();
-           int tempX2;
-           int tempY2;
-            current.getCoordinates().toRight();
-            while (current.getPrevious() != null) {
-                tempX2 = current.getPrevious().getCoordinates().getX();
-                tempY2 = current.getPrevious().getCoordinates().getY();
-                current.getPrevious().setCoordinates(tempX1,tempY1);
-                current = current.getPrevious();
-                tempX1 = tempX2;
-                tempY1 = tempY2;
+    public boolean death (Fruit eat){
+        boolean result = false;
+        Fruit current = head.getPrevious();
 
-
+        while (current.getPrevious() != null) {
+            if (current.getCoordinates().equals(head.getCoordinates())
+                    && head.getCoordinates() != eat.getCoordinates()) {
+                result = true;
+                break;
             }
+            current = current.getPrevious();
+        }
+        return result;
+    }
+
+    public  void changeOfCoordinates( int width, int height){
+        Fruit current = head;
+        if (current.getCoordinates().getX() == width) {
+            current.getCoordinates() .setX(1);
+        } else if (current.getCoordinates().getX() == 0) {
+            current.getCoordinates().setX(--width);
+        }
+        if (current.getCoordinates().getY() == height) {
+            current.getCoordinates().setY(1);
+        } else if (current.getCoordinates().getY() == 0) {
+            current.getCoordinates().setY(--height);
         }
     }
 
-    public void moveleft(char direction) {
-        if (direction == 'd') {
-            System.out.println("Move Left is not available");
-            direction = 'd';
-        }  else if (direction == 'w'||direction == 'a'||direction == 's') {
-            Fruit current = head;
-            int tempX1 = current.getCoordinates().getX();
-            int tempY1 = current.getCoordinates().getY();
-            int tempX2;
-            int tempY2;
-            current.getCoordinates().toLeft();
-            while (current.getPrevious() != null) {
-                tempX2 = current.getPrevious().getCoordinates().getX();
-                tempY2 = current.getPrevious().getCoordinates().getY();
-                current.getPrevious().setCoordinates(tempX1,tempY1);
-                current = current.getPrevious();
-                tempX1 = tempX2;
-                tempY1 = tempY2;
+    public void moveRight() {
+        Fruit current = head;
+        int tempX1 = current.getCoordinates().getX();
+        int tempY1 = current.getCoordinates().getY();
+        int tempX2;
+        int tempY2;
+        current.getCoordinates().toRight();
+        while (current.getPrevious() != null) {
+            tempX2 = current.getPrevious().getCoordinates().getX();
+            tempY2 = current.getPrevious().getCoordinates().getY();
+            current.getPrevious().setCoordinates(tempX1, tempY1);
+            current = current.getPrevious();
+            tempX1 = tempX2;
+            tempY1 = tempY2;
 
-
-            }
         }
 
     }
 
-    public void moveDown(char direction) {
-        if (direction == 'w') {
-            System.out.println("Move Down is not available");
-            direction = 'w';
-        } else if (direction == 's'||direction == 'a'||direction == 'd') {
-            Fruit current = head;
-            int tempX1 = current.getCoordinates().getX();
-            int tempY1 = current.getCoordinates().getY();
-            int tempX2;
-            int tempY2;
-            current.getCoordinates().toDown();
-            while (current.getPrevious() != null) {
-                tempX2 = current.getPrevious().getCoordinates().getX();
-                tempY2 = current.getPrevious().getCoordinates().getY();
-                current.getPrevious().setCoordinates(tempX1,tempY1);
-                current = current.getPrevious();
-                tempX1 = tempX2;
-                tempY1 = tempY2;
+    public void moveleft() {
+        Fruit current = head;
+        int tempX1 = current.getCoordinates().getX();
+        int tempY1 = current.getCoordinates().getY();
+        int tempX2;
+        int tempY2;
+        current.getCoordinates().toLeft();
+        while (current.getPrevious() != null) {
+            tempX2 = current.getPrevious().getCoordinates().getX();
+            tempY2 = current.getPrevious().getCoordinates().getY();
+            current.getPrevious().setCoordinates(tempX1, tempY1);
+            current = current.getPrevious();
+            tempX1 = tempX2;
+            tempY1 = tempY2;
 
 
-            }
         }
-    }
-
-    public void moveUp(char direction) {
-        if (direction == 's') {
-            System.out.println("Move Up is not available");
-            direction = 's';
-        } else if (direction == 'w'||direction == 'a'||direction == 'd') {
-            Fruit current = head;
-            int tempX1 = current.getCoordinates().getX();
-            int tempY1 = current.getCoordinates().getY();
-            int tempX2;
-            int tempY2;
-            current.getCoordinates().toUp();
-            while (current.getPrevious() != null) {
-                tempX2 = current.getPrevious().getCoordinates().getX();
-                tempY2 = current.getPrevious().getCoordinates().getY();
-                current.getPrevious().setCoordinates(tempX1,tempY1);
-                current = current.getPrevious();
-                tempX1 = tempX2;
-                tempY1 = tempY2;
-
-
-            }
-        }
-
 
     }
 
+    public void moveDown() {
+        Fruit current = head;
+        int tempX1 = current.getCoordinates().getX();
+        int tempY1 = current.getCoordinates().getY();
+        int tempX2;
+        int tempY2;
+        current.getCoordinates().toDown();
+        while (current.getPrevious() != null) {
+            tempX2 = current.getPrevious().getCoordinates().getX();
+            tempY2 = current.getPrevious().getCoordinates().getY();
+            current.getPrevious().setCoordinates(tempX1, tempY1);
+            current = current.getPrevious();
+            tempX1 = tempX2;
+            tempY1 = tempY2;
+
+
+        }
+    }
+
+    public void moveUp() {
+        Fruit current = head;
+        int tempX1 = current.getCoordinates().getX();
+        int tempY1 = current.getCoordinates().getY();
+        int tempX2;
+        int tempY2;
+        current.getCoordinates().toUp();
+        while (current.getPrevious() != null) {
+            tempX2 = current.getPrevious().getCoordinates().getX();
+            tempY2 = current.getPrevious().getCoordinates().getY();
+            current.getPrevious().setCoordinates(tempX1, tempY1);
+            current = current.getPrevious();
+            tempX1 = tempX2;
+            tempY1 = tempY2;
+        }
+    }
+
+    public  Fruit getHead() {
+        return head;
+    }
 }
+
+
 
