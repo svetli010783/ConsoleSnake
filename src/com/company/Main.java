@@ -2,11 +2,9 @@ package com.company;
 
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 public class Main {
     static char direction = 'd';
@@ -14,24 +12,19 @@ public class Main {
     public static int width = 30;
     public static int height = 14;
     static Snake snake = new Snake(width, height);
-    static Menu menu = new Menu();
     static boolean hasFruit = false;
     static Fruit eat = null;
     static boolean isEnd;
     static int score;
-    static Consumer<ExecutorService> shutdown = ExecutorService::shutdown;
 
 
     public static void main(String[] args) {
-        menu.start();
 
         Runnable helloRunnable = new Runnable() {
             public void run() {
-                if (isEnd){
-                    System.out.println("Вы проиграли");
-                    System.out.println("Ваш счет " + score);
-                    System.exit(1);
-                }
+                createFruit();
+                eat();
+                end();
                 renderFrame();
             }
         };
@@ -48,9 +41,36 @@ public class Main {
 
     }
 
+    /**
+     * данный метод выыодит очки игрока и  останавливает работу программы ,
+     * в тот момент когда змейка врезается в саму себя
+     */
+    public static void end() {
+        if (isEnd) {
+            System.out.println("Вы проиграли");
+            System.out.println("Ваш счет " + score);
+            System.exit(1);
+        }
+    }
 
-    private static void renderFrame() {
-        clrscr();
+    /**
+     * этот метод вызывает метод увеличения размера змеи,
+     * когда координаты головы змеи становятся равны координатам фрукта и
+     * добавляет 100 к счетчику очков
+     */
+    public static void eat() {
+        if (eat.getCoordinates().equals(snake.getHead().getCoordinates())) {
+            snake.eat(eat);
+            hasFruit = false;
+            score = score + 100;
+        }
+    }
+
+    /**
+     * метод который создает фрукт с рандомными координатами,
+     * в тот момент когда старый фрукт съедает змея
+     */
+    public static void createFruit() {
         while (!hasFruit) {
             eat = new Fruit(
                     new Coordinate(
@@ -61,19 +81,19 @@ public class Main {
                     null);
             hasFruit = true;
         }
-        if (eat.getCoordinates().equals(snake.getHead().getCoordinates())) {
-            var copy = snake.eat(eat, hasFruit);
-            hasFruit = copy;
-            score = score + 100;
-        }
+    }
 
-
+    /**
+     * метод кторый осуществляет отрисовку кадров
+     */
+    private static void renderFrame() {
+        clrscr();
         for (int y = 0; y <= height; y++) {
             for (int x = 0; x <= width; x++) {
                 Coordinate coord = new Coordinate(x, y);
                 eat.changeOfCoordinates(width, height);
                 snake.changeOfCoordinates(width, height);
-                if (snake.death(eat)) {
+                if (snake.isDeath(eat)) {
                     isEnd = true;
                 }
                 if (y == 0 || y == height)
@@ -92,18 +112,22 @@ public class Main {
         directionSwitching(direction);
     }
 
+    /**
+     * метод изменнения направления змеи на то которое было указано в direction
+     * @param direction этот параметр описывает направление змейки
+     */
     private static void directionSwitching(char direction) {
         if (direction == 'w' && oldDirection != 's') {
-            snake.moveUp();
+            snake.toUp();
             oldDirection = direction;
         } else if (direction == 'a' && oldDirection != 'd') {
-            snake.moveleft();
+            snake.toLeft();
             oldDirection = direction;
         } else if (direction == 's' && oldDirection != 'w') {
-            snake.moveDown();
+            snake.toDown();
             oldDirection = direction;
         } else if (direction == 'd' && oldDirection != 'a') {
-            snake.moveRight();
+            snake.toRight();
             oldDirection = direction;
         } else {
             direction = oldDirection;
@@ -112,6 +136,9 @@ public class Main {
 
     }
 
+    /**
+     * метод очистки командной строки
+     */
     public static void clrscr() {
         try {
             if (System.getProperty("os.name").contains("Windows"))
